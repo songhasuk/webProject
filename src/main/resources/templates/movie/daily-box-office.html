@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+th:replace="~{layout/layout1 :: layout(~{::head}, ~{::main})}">
+<head>
+	<style type="text/css">
+		table{border-collapse: collapse;}
+		#content>.wrap>table tr{border-bottom: 1px solid #a9a9a9;}
+		#content>.wrap>table tr td{padding: 1em;}
+		#content>.wrap>table tr td:nth-of-type(1){width: 100px;}
+		#content>.wrap>table tr td:nth-of-type(2){width: 680px;}
+		#content>.wrap>table tr td:nth-of-type(3){width: 200px;}
+		#content>.wrap>table tr td:nth-of-type(4){width: 200px; text-align: right;}
+	</style>
+</head>	
+<main>
+	<h1>메인컨텐츠</h1>
+	<div class="wrap view-size">
+		<!-- 메인영역에 들어가는 태그를 작성할 예정입니다. -->
+		<section>
+			<h1>페이지타이틀</h1>
+			<div class="wrap">
+				<p>일일 박스 오피스</p>
+				<div>[[${#temporals.format(basic, 'yyyy년 MM월 dd일 기준')}]]</div>
+			</div>
+		</section>
+		<section id="content">
+			<h1>컨텐츠영역</h1>
+			<div class="wrap">
+				<table>
+					<thead >
+						<tr>
+							<td>순위</td>
+							<td>영화제목</td>
+							<td>개봉일</td>
+							<td>일별 관객수</td>
+						</tr>
+					</thead>
+					<tbody >
+						<tr th:each="dto:${list}">
+							<td>[(${dto.rank})]</td>
+							<td>[(${dto.movieNm})]</td>
+							<td>[(${dto.openDt})]</td>
+							<td  th:text="${#numbers.formatInteger(dto.audiCnt,1,'COMMA')}"></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</section>
+	</div>
+</main>
+</html>

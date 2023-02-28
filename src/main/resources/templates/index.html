@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+th:replace="~{layout/layout1 :: layout(~{::head}, ~{::main})}">
+<head>
+	<style type="text/css">
+		main>.wrap{
+			height: 500px;
+			background-color: yellow;
+		}
+	</style>
+</head>	
+<main>
+	<h1>메인컨텐츠</h1>
+	<div class="wrap view-size">
+		<!-- 메인영역에 들어가는 태그를 작성할 예정입니다. -->
+		<p>어서오세요..홈페이지 방문을 환영합니다.</p>
+	</div>
+</main>
+</html>

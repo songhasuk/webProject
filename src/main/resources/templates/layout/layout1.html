@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html th:fragment="layout(head, main)" 
+xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+	<meta charset="UTF-8">
+	<meta name="_csrf" th:content="${_csrf.token}"/>
+	<meta name="_csrf_header" content="X-CSRF-TOKEN"/>
+	<title>나의 스프링 웹 프로젝트</title>
+	<!-- 자바스크립트 -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<script src="/js/header.js"></script>
+	<!-- css파일정보 -->
+	<link rel="stylesheet" href="/css/reset.css">
+	<link rel="stylesheet" href="/css/common.css">
+	<link rel="stylesheet" href="/css/header.css">
+	<!-- 공동페이지 css,js파일 -->
+	<th:block th:replace="${head}">
+		레이아웃을 적용하는 페이지에 적용된 head가 삽입되요
+	</th:block>
+	
+</head>
+<body>
+	<header>
+		<h1>헤더영역</h1>
+		<div class="wrap view-size flex between">
+			<section>
+				<h1>로고</h1>
+				<div class="wrap">
+					<a href="/">HOME</a>
+				</div>
+			</section>
+			<nav id="main-menu">
+				<h1>메인메뉴</h1>
+				<div class="wrap">
+					<ul class="flex">
+						<li><a href="/bbs/boards">게시글</a></li>
+						<li><a href="/common/movie/daily-box-office">일별박스오피스</a></li>
+						
+					</ul>
+				</div>
+			</nav>
+			<section>
+				<h1>유저메뉴</h1>
+				<div class="wrap">
+					<a sec:authorize="isAnonymous()" href="/sign/signin">로그인</a>
+					<th:block sec:authorize="isAuthenticated()">
+						<span sec:authentication="principal.name"></span>
+						<button type="button" id="btn-logout">로그아웃</button>
+					</th:block>
+					<a href="/sign/signup">회원가입</a>
+				</div>
+			</section>
+			
+		</div>
+	</header>
+	<main th:replace="${main}">
+	</main>
+	<footer>
+		<h1>하단영역</h1>
+		<div class="wrap view-size">
+		
+		</div>
+	</footer>
+
+</body>
+</html>

@@ -1,0 +1,12 @@
+@charset "UTF-8";
+
+header>.wrap{
+	height: 80px;
+	line-height: 80px;
+}
+
+#main-menu>.wrap ul li a{
+	display: inline-block;
+	padding: 1em;
+	line-height: normal;
+}

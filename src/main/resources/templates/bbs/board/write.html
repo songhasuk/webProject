@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+th:replace="~{layout/layout1 :: layout(~{::head}, ~{::main})}">
+<head>
+	
+</head>	
+<main>
+	<h1>메인컨텐츠</h1>
+	<div class="wrap view-size">
+		<!-- 메인영역에 들어가는 태그를 작성할 예정입니다. -->
+		<section>
+			<h1>페이지타이틀</h1>
+			<div class="wrap">
+				<p>글쓰기페이지</p>
+			</div>
+		</section>
+		<section>
+			<h1>컨텐츠영역</h1>
+			<div class="wrap">
+				<form action="/bbs/board" method="post">
+					<ul>
+						<li>
+							<input type="text" name="title" placeholder="제목입력 하세요">
+						</li>
+						<li>
+							<textarea name="content"></textarea>
+						</li>
+						
+						<li>
+							<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+							<!-- <input type="hidden" name="email" th:value="${#authentication.name}" > -->
+							<input type="hidden" name="email" th:value="${#authentication.principal.email}" >
+							<button type="submit">글쓰기</button>
+						</li>
+					</ul>
+				</form>
+			</div>
+		</section>
+	</div>
+</main>
+</html>

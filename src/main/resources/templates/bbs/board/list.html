@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+th:replace="~{layout/layout1 :: layout(~{::head}, ~{::main})}">
+<head>
+	<style type="text/css">
+		#content>.wrap>ul li{
+			flex: 1;
+		}
+	</style>
+</head>	
+<main>
+	<h1>메인컨텐츠</h1>
+	<div class="wrap view-size">
+		<!-- 메인영역에 들어가는 태그를 작성할 예정입니다. -->
+		<section>
+			<h1>페이지타이틀</h1>
+			<div class="wrap">
+				<p>게시글페이지</p>
+			</div>
+		</section>
+		<section id="content">
+			<h1>컨텐츠영역</h1>
+			<div class="wrap">
+				<div class="flex end"><a href="/auth/board">글쓰기</a></div>
+				<ul class="flex">
+					<li>글번호</li>
+					<li>제목</li>
+					<li>조회수</li>
+					<li>작성자</li>
+					<li>작성일</li>
+				</ul>
+				<ul class="flex" th:each="dto:${list}">
+					<li>[[${dto.no}]]</li>
+					<li><a th:href="|/bbs/boards/${dto.no}|">[[${dto.title}]]</a></li>
+					<li>[[${dto.readCount}]]</li>
+					<li>
+					
+						<div>[[${dto.userName}]]</div>
+					</li>
+					<li>
+						<div th:unless="${today eq dto.createdDate.toLocalDate()}" th:text="${#temporals.format(dto.createdDate, 'yyyy년MM월dd일')}"></div>
+						<div th:if="${today eq dto.updatedDate.toLocalDate()}"  th:text="${#temporals.format(dto.updatedDate, 'HH:mm:ss')}"></div>
+						<!-- <div th:text="${dto.updatedDate.toLocalDate()}"></div>
+						<div th:text="${dto.updatedDate.toLocalTime()}"></div> -->
+					</li>
+				</ul>
+				<div class="flex center" th:unless="${list}">
+					게시글이 존재하지 않습니다.
+				</div>
+				<section id="pagging">
+					<h1>페이징 처리</h1>
+					<div class="wrap">
+						<ol class="flex center">
+							<li th:if="${pd.from>1}">
+								<a th:href="@{/bbs/boards(page=1)}">처음</a>
+								<a th:href="@{/bbs/boards(page=${pd.from-1})}">&lt;</a>
+							</li>
+							<li style="margin: 0 5px;" th:each="num:${#numbers.sequence(pd.from, pd.to)}">
+								<!-- <a th:href="|/bbs/boards?page=${num}|">[[${num}]]</a> -->
+								<a th:href="@{/bbs/boards(page=${num})}">[[${num}]]</a>
+							</li>
+							<li th:if="${pd.to lt pd.tot}">
+								<a th:href="@{/bbs/boards(page=${pd.to+1})}">&gt;</a>
+								<a th:href="@{/bbs/boards(page=${pd.tot})}">맨뒤</a>
+							</li>
+						</ol>
+					</div>
+				</section>
+			</div>
+		</section>
+		<form action="/bbs/searchs" method="get">
+			<input name="name" type="text" placeholder="제목입력">
+			<button>검색하기</button>
+		</form>
+	</div>
+</main>
+</html>
